@@ -1,6 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer")
 const dotenv = require("dotenv");
+var cors = require('cors')
 
 const app = express();
 
@@ -8,6 +9,7 @@ dotenv.config();
 
 const HTTP_PORT = process.env.PORT || 8080;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
