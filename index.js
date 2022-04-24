@@ -45,7 +45,7 @@ app.post("/send", (req, res) => {
 		}
 	});
 
-	res.status(200).json({ sent: true });
+	res.status(200).json({ formData });
 });
 
 app.use((req, res) => {
