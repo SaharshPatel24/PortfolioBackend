@@ -23,6 +23,7 @@ app.post("/send", (req, res) => {
 	const formData = req.body;
 	const transporter = nodemailer.createTransport({
 		service: process.env.TRANSPORT_SERVICE,
+		port: 587,
 		auth: {
 			user: process.env.MY_EMAIL,
 			pass: process.env.MYPASSWORD
@@ -33,7 +34,16 @@ app.post("/send", (req, res) => {
 		from: process.env.MY_EMAIL,
 		to: process.env.MY_EMAIL,
 		subject: "Hello Somebody trying to Contact from Your Website",
-		text: getFormattedString(formData.firstname, formData.lastname, formData.message, formData.email, formData.hiring)
+		text: `
+		Hi Saharsh,
+			Someone from your website has sent you a message. Here are their information. Please get it touch as soon as possible.
+			Name: ${formData.lastname} ${formData.firstname},
+			Email: ${formData.email},
+			Message: 
+			${formData.message},
+			IsHiring: ${formData.hiring},
+	`
+		// getFormattedString(formData.firstname, formData.lastname, formData.message, formData.email, formData.hiring)
 	};
 
 	transporter.sendMail(mailOptions, function (error, info) {
@@ -42,10 +52,9 @@ app.post("/send", (req, res) => {
 			return res.status(500).json({ error });
 		} else {
 			console.log('Email sent ' + info.response);
+			res.status(200).json({ formData });
 		}
 	});
-
-	res.status(200).json({ formData });
 });
 
 app.use((req, res) => {
