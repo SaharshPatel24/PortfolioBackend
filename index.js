@@ -24,15 +24,15 @@ app.post("/send", (req, res) => {
 	const transporter = nodemailer.createTransport({
 		service: process.env.TRANSPORT_SERVICE,
 		auth: {
-			user: process.env.GALAXYSTAFFING_TO_EMAIL,
+			user: process.env.MY_EMAIL,
 			pass: process.env.MYPASSWORD
 		}
 	});
 
 	const mailOptions = {
-		from: process.env.GALAXYSTAFFING_TO_EMAIL,
-		to: process.env.GALAXYSTAFFING_TO_EMAIL,
-		subject: formData.subject,
+		from: process.env.MY_EMAIL,
+		to: process.env.MY_EMAIL,
+		subject: "Hello Somebody trying to Contact from Your Website",
 		text: getFormattedString(formData.firstname, formData.lastname, formData.message, formData.email, formData.hiring)
 	};
 
